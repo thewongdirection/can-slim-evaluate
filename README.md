@@ -1,4 +1,4 @@
-# can-slim-recommend
+# can-slim-suggest
 
 A Claude skill that **evaluates a single stock ticker against the CAN SLIM growth-investing
 model** and returns a structured, letter-by-letter scorecard with a **BUY-RANGE / WATCH /
@@ -10,7 +10,7 @@ TSLA a good stock"*, *"rate AAPL"*, *"does PLTR pass CAN SLIM"*, *"how does AMD 
 CRWD a buy"*, *"grade this stock"*.
 
 It is the single-stock **grading lens** — one ticker in, a CAN SLIM verdict out. For a ranked
-*list* of screened ideas, use the companion [`stock-recommend`](https://github.com/thewongdirection/stock-recommend)
+*list* of screened ideas, use the companion [`can-slim-recommend`](https://github.com/thewongdirection/can-slim-recommend)
 skill; for a data-rich single-stock dashboard, use `ibkr-review-ticker`.
 
 ## What it does
@@ -41,7 +41,7 @@ For the ticker you name it:
 ## Contents
 - `SKILL.md` — activation + workflow.
 - `references/canslim-methodology.md` — the full distilled CAN SLIM rule set (shared with
-  `stock-recommend`): criteria & thresholds, chart-base patterns, buy/sell rules, money
+  `can-slim-recommend`): criteria & thresholds, chart-base patterns, buy/sell rules, money
   management, and the classic mistakes.
 - `references/data-and-scoring-guide.md` — the single-ticker data-gathering sequence, the
   fundamental source-priority ladder, and the pass/partial/fail scoring rubric + verdict rules.

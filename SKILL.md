@@ -1,5 +1,5 @@
 ---
-name: can-slim-recommend
+name: can-slim-suggest
 description: >-
   Evaluate a single specified stock ticker against the CAN SLIM growth-investing model and
   deliver a structured letter-by-letter (C-A-N-S-L-I-M) scorecard with a BUY-RANGE / WATCH /
@@ -11,12 +11,12 @@ description: >-
   publicly traded ticker; pulls live price/volume from the Interactive Brokers (IBKR) connector
   and fundamentals from connected financial-data sources or the web. This is the single-stock
   GRADING lens (one ticker in, a CAN SLIM verdict out) — for a ranked LIST of screened ideas
-  use the `stock-recommend` skill instead; for a data-rich single-stock dashboard use
+  use the `can-slim-recommend` skill instead; for a data-rich single-stock dashboard use
   `ibkr-review-ticker`. Analysis and decision support, never personalized investment advice and
   never trading.
 ---
 
-# can-slim-recommend — grade one ticker against CAN SLIM
+# can-slim-suggest — grade one ticker against CAN SLIM
 
 Takes **one ticker** and grades it, letter by letter, against the seven CAN SLIM criteria,
 then returns a **BUY-RANGE / WATCH / AVOID** verdict with the evidence, a chart-position read,
@@ -108,7 +108,7 @@ direction. No generic macro takes, analyst targets, or "good company" vibes. Alw
 verdict with the defensive rule (cut losses 7-8%).
 
 ## Companion skills
-- **`stock-recommend`** — the market-wide screener (a ranked list of CAN SLIM ideas). Use it
+- **`can-slim-recommend`** — the market-wide screener (a ranked list of CAN SLIM ideas). Use it
   when the user wants ideas/a list rather than a verdict on one named stock.
 - **`ibkr-review-ticker`** — a data-rich single-stock dashboard (fundamentals vs peers,
   valuation, options, price outlook). Fold its data into the evaluation when useful.
@@ -116,7 +116,7 @@ verdict with the defensive rule (cut losses 7-8%).
   13F/Form 4 for I.
 - **If a companion skill you want isn't installed**, tell the user and point them to its repo,
   then continue with the source ladder:
-  - `stock-recommend` -> https://github.com/thewongdirection/stock-recommend
+  - `can-slim-recommend` -> https://github.com/thewongdirection/can-slim-recommend
   - `ibkr-review-ticker` -> https://github.com/thewongdirection/ibkr-review-ticker
   - `securities-filings-lookup` -> https://github.com/thewongdirection/securities-filings-lookup
 
@@ -135,7 +135,7 @@ verdict with the defensive rule (cut losses 7-8%).
 
 ## Files in this skill
 - `references/canslim-methodology.md` — the full CAN SLIM rules, thresholds, base patterns,
-  sell rules, money management, and mistake list. (Shared with `stock-recommend`.)
+  sell rules, money management, and mistake list. (Shared with `can-slim-recommend`.)
 - `references/data-and-scoring-guide.md` — the single-ticker data-gathering sequence, the
   fundamental source ladder, and the pass/partial/fail scoring rubric + verdict definitions.
 - `scripts/relative_strength.py` — computes the RS proxy, % off 52-week high, base
