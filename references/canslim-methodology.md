@@ -86,7 +86,7 @@ Two ideas underpin everything:
 - **Relative Strength (RS):** buy stocks whose 12-month price performance beats **≥ 80%**
   (ideally 90%+) of the market. Big winners averaged an **RS ~87** before their major run.
   **Do not buy RS below ~70.** (This skill computes an RS *proxy* from price history — see
-  ibkr-data-guide.md — since a true full-market 1–99 RS rating needs the whole market.)
+  data-and-scoring-guide.md — since a true full-market 1–99 RS rating needs the whole market.)
 - **Avoid "sympathy plays"** — the cheaper laggard in the same group that never performs
   like the leader. "The first man gets the oyster; the second, the shell."
 - **Never buy on the way down** because it "looks cheap" (Cisco $82→$8, Crocs $75→$1, BofA

@@ -32,14 +32,14 @@ Same ladder as the screener — prefer real financial data over generic web sear
    `earnings-quality-screen`) — latest-quarter beat/acceleration/guidance for **C**, the
    earnings-quality check, and the **N** story.
 3. **LSEG** (`lseg:equity-research`) — analyst consensus estimates + revisions/surprises.
-4. **Financial Modeling Prep (FMP)** — a structured fundamentals API (via an FMP MCP
-   connector or a direct API call with the user's key). Good, affordable coverage of the exact
-   CAN SLIM inputs: income-statement / cash-flow history and **EPS & revenue growth** (C),
-   multi-year annuals, **ROE, margins, debt/equity** (A/S), analyst **estimates** (forward A),
-   institutional-ownership and insider data (I), key-metrics/ratios, and a **stock-screener**
-   endpoint. Prefer its `income-statement`, `key-metrics`, `ratios`, `financial-growth`,
-   `analyst-estimates`, and `institutional-ownership` endpoints. Requires the user's FMP API
-   key / connector; if absent, skip to the next source.
+4. **Financial Modeling Prep (FMP)** — a structured fundamentals MCP (deferred; load its tools
+   with `ToolSearch`). Broad, fast coverage of the exact CAN SLIM inputs. Preferred tools:
+   `statements` (income / balance / cash-flow history → **EPS & revenue growth** for **C**,
+   multi-year annuals, **margins / ROE / debt** for **A**/**S**), `analyst` / `tipranks`
+   (forward estimates & consensus → forward **A**), `form13F` + `insiderTrades` (institutional
+   & management ownership → **I**/**S**), `company` (profile, float, sector), `calendar`
+   (next-earnings date → **N**/timing), `secFilings`, `discountedCashFlow`, `earningsTranscript`.
+   Requires the user's FMP API key / connector; if absent, skip to the next source.
 5. **SEC EDGAR** via the **`securities-filings-lookup`** skill — authoritative 10-K/10-Q/20-F
    for ground-truth statements, and 13F/Form 4 for **I** (also non-US listings).
 6. **General web search** — only when none of the above are connected. Favor primary/recent
