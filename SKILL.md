@@ -3,7 +3,8 @@ name: can-slim-grader
 description: >-
   Evaluate a single specified stock ticker against the CAN SLIM growth-investing model and
   deliver a structured letter-by-letter (C-A-N-S-L-I-M) scorecard with a BUY-RANGE / WATCH /
-  AVOID verdict, rendered as a self-contained PDF report (HTML source kept alongside). Use this whenever the user wants to
+  AVOID verdict, rendered as a self-contained HTML dashboard you open in the browser (with an
+  optional PDF export). Use this whenever the user wants to
   judge the QUALITY of one stock or asks whether a specific ticker is any good — "evaluate
   NVDA", "is TSLA a good stock", "rate AAPL", "does PLTR pass CAN SLIM", "how does AMD score",
   "should I be interested in MSFT", "grade this stock", "assess LLY", "is CRWD a buy", "what do
@@ -27,7 +28,8 @@ lens** — one ticker in, one verdict out. They share `references/canslim-method
 Takes **one ticker** and grades it, letter by letter, against the seven CAN SLIM criteria,
 then returns a **BUY-RANGE / WATCH / AVOID** verdict with the evidence, a chart-position read,
 and — if it's actionable — the pivot buy point and the 7-8% loss-cutting stop. Output is a
-self-contained **PDF** scorecard by default (the HTML source is kept alongside).
+self-contained **HTML dashboard** by default — a single file you open straight in the browser
+(theme-aware, dark by default) — with an **optional PDF export** for sharing/printing.
 **Decision support, not advice, and never an order.**
 
 ## What CAN SLIM is (the standard this skill grades against)
@@ -88,24 +90,23 @@ off high.
   or is a laggard near lows. Name the failing letters. Be explicit that high RS alone is not
   enough without earnings, and that a beaten-down "cheap" stock is a laggard the method avoids.
 
-### 6 — Deliver a PDF scorecard (default)
+### 6 — Deliver an HTML dashboard (default)
 1. **Fill the report.** Copy `assets/evaluation_template.html` to `<TICKER>-canslim.html` and
    fill the `CONFIG` object (the only thing you edit) — header (ticker/company/price/as-of),
    `verdict` (label + tone + pass-weighted score /7 + one-line summary + buy point/stop), the
    seven `letters` (each with score, the bar, the actual value, and a CAN-SLIM-only `read`), the
    `chart` technicals (RS, % off high, base, pivot, breakout volume), the `buyPlan` (pivot,
    7-8% stop, profit-taking, sell signals to watch), disclaimer and sources.
-2. **Convert to PDF — this is the default deliverable.** Run
-   `python scripts/html_to_pdf.py <TICKER>-canslim.html <TICKER>-canslim.pdf`. The helper tries
-   headless Chrome/Chromium/Edge (with the print header/footer suppressed), then Playwright,
-   WeasyPrint, wkhtmltopdf, and prints which engine it used. The template is print-tuned
-   (A4/Letter, `print-color-adjust:exact`) so the PDF reproduces the on-screen report with its
-   colored verdict badge and scorecard chips intact.
-3. **Deliver the PDF** (`<TICKER>-canslim.pdf`) as the primary output (SendUserFile /
-   present_files, or give the path). Keep the source `.html` alongside it and mention it's there
-   if the user wants to view/re-style it in a browser. If **no PDF engine is available** (the
-   helper exits non-zero), fall back to delivering the HTML and say the PDF step needs
-   Chrome/Chromium (or `pip install playwright weasyprint`).
+2. **Deliver the HTML dashboard — this is the default deliverable.** The filled
+   `<TICKER>-canslim.html` is fully self-contained (no external assets), theme-aware, and dark
+   by default. Give the user the file and **open it in the browser** for them (e.g. launch
+   Chrome/the default browser on the file path, or present it) so they can view it directly. The
+   dashboard renders itself from `CONFIG`; do not hand-edit the DOM.
+3. **Optional PDF export.** If the user wants a shareable/printable copy, run
+   `python scripts/html_to_pdf.py <TICKER>-canslim.html <TICKER>-canslim.pdf` (headless
+   Chrome/Chromium/Edge → Playwright → WeasyPrint → wkhtmltopdf; it prints the engine used). The
+   template's print CSS keeps the dark background and colored badges/chips. This is a secondary
+   convenience, not the default — don't block on it if no PDF engine is present.
 4. Keep the chat reply short: the verdict, the two or three letters that drove it, and the buy
    point/stop if actionable.
 
@@ -148,11 +149,12 @@ verdict with the defensive rule (cut losses 7-8%).
   fundamental source ladder, and the pass/partial/fail scoring rubric + verdict definitions.
 - `scripts/relative_strength.py` — computes the RS proxy, % off 52-week high, base
   depth/length, and breakout volume from the ticker's OHLCV bars vs SPY. Pure standard library.
-- `scripts/html_to_pdf.py` — converts the filled report HTML to the default **PDF** deliverable.
-  Multi-engine (headless Chrome/Chromium/Edge with header/footer suppressed → Playwright →
-  WeasyPrint → wkhtmltopdf); prints the engine used. Pure standard library (uses whatever
-  browser/lib is present).
-- `assets/evaluation_template.html` — the report source: a self-contained, theme-aware,
-  print-ready single-stock CAN SLIM scorecard driven by a `CONFIG` object (verdict badge, the
-  seven-letter scorecard with evidence, technicals, and the buy/sell plan). Pure-ASCII source;
-  print CSS keeps the colored badges/chips in the PDF.
+- `scripts/html_to_pdf.py` — **optional** helper that exports the filled HTML dashboard to a PDF
+  for sharing/printing (not the default deliverable). Multi-engine (headless Chrome/Chromium/Edge
+  with header/footer suppressed → Playwright → WeasyPrint → wkhtmltopdf); prints the engine used.
+  Pure standard library (uses whatever browser/lib is present).
+- `assets/evaluation_template.html` — the **default deliverable**: a self-contained, theme-aware
+  (dark by default) single-stock CAN SLIM dashboard you open straight in the browser, driven by a
+  `CONFIG` object (verdict badge, the seven-letter scorecard with evidence, technicals, and the
+  buy/sell plan). Pure-ASCII source; print CSS keeps the dark background and colored badges/chips
+  for the optional PDF export.

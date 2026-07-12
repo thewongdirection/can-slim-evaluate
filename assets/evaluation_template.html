@@ -5,7 +5,9 @@
     1. Copy this file to an output file, e.g. <TICKER>-canslim.html
     2. Fill the CONFIG object below with the evaluation. That is the ONLY thing you edit -
        the page renders itself. Do not hand-edit the DOM.
-    3. Open / present the file. For PDF, print-to-PDF (print CSS is A4/Letter-friendly).
+    3. Open the file in a browser - this HTML dashboard is the default deliverable (dark by
+       default). Optional: export a PDF with scripts/html_to_pdf.py (print CSS is A4/Letter,
+       keeps the dark background).
 
   RULES:
     - Every letter's `read` must be expressed ONLY in CAN SLIM terms, and cite the concrete
@@ -24,22 +26,18 @@
 <title>CAN SLIM Evaluation</title>
 <style>
   :root{
-    --bg:#f7f8fa; --panel:#ffffff; --ink:#1a1d24; --muted:#5b6472; --line:#e4e7ec;
-    --accent:#1c64f2; --accent-soft:#e8f0fe;
-    --pass:#0f9d58; --pass-bg:#e6f4ea; --partial:#c77700; --partial-bg:#fdf1dd;
-    --fail:#c5221f; --fail-bg:#fce8e6; --chip:#eef1f5;
+    /* Dark mode is the default design for this report. */
+    --bg:#0f1218; --panel:#171b22; --ink:#e6e9ef; --muted:#9aa4b2; --line:#262c36;
+    --accent:#5b8cff; --accent-soft:#1a2436; --chip:#212733;
+    --pass:#3ecf8e; --pass-bg:#123122; --partial:#e0a94e; --partial-bg:#33280f;
+    --fail:#f2776f; --fail-bg:#3a1512;
     --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
     --sans:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
   }
-  @media (prefers-color-scheme:dark){
-    :root{--bg:#0f1218;--panel:#171b22;--ink:#e6e9ef;--muted:#9aa4b2;--line:#262c36;
-      --accent:#5b8cff;--accent-soft:#1a2436;--chip:#212733;
-      --pass-bg:#123122;--partial-bg:#33280f;--fail-bg:#3a1512;}
-  }
-  :root[data-theme="dark"]{--bg:#0f1218;--panel:#171b22;--ink:#e6e9ef;--muted:#9aa4b2;--line:#262c36;
-      --accent:#5b8cff;--accent-soft:#1a2436;--chip:#212733;--pass-bg:#123122;--partial-bg:#33280f;--fail-bg:#3a1512;}
+  /* Optional manual light override; dark stays the default even in a light-OS browser. */
   :root[data-theme="light"]{--bg:#f7f8fa;--panel:#ffffff;--ink:#1a1d24;--muted:#5b6472;--line:#e4e7ec;
-      --accent:#1c64f2;--accent-soft:#e8f0fe;--chip:#eef1f5;--pass-bg:#e6f4ea;--partial-bg:#fdf1dd;--fail-bg:#fce8e6;}
+      --accent:#1c64f2;--accent-soft:#e8f0fe;--chip:#eef1f5;
+      --pass:#0f9d58;--pass-bg:#e6f4ea;--partial:#c77700;--partial-bg:#fdf1dd;--fail:#c5221f;--fail-bg:#fce8e6;}
 
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
@@ -84,7 +82,7 @@
 
   @media print{
     *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    body{background:#fff}
+    body{background:var(--bg)}
     .wrap{max-width:none;padding:0}
     .row,.verdict,.stat,.callout{break-inside:avoid}
     a{color:inherit;text-decoration:none}
