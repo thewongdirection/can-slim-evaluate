@@ -32,6 +32,11 @@ cover **C/A** and P/E/ROE, **but are often plan-gated (HTTP 403 NOT_AUTHORIZED)*
 C/A from the fundamental ladder below. (Verified 2026-07: aggregates + ticker-overview entitled;
 financials/ratios/earnings needed a plan upgrade. Cross-check: Massive bars reproduced the
 IBKR-based RS and % off high exactly.)
+**Rate limit — throttle Massive to at most 5 calls per minute** (space them ~12s apart). Batch
+to stay under it: one `/v2/aggs` call per ticker for daily and one for weekly, fetch SPY's bars
+**once** and reuse the stored table across tickers, and prefer `query_data` (SQL over stored
+tables) over re-fetching. A typical single-ticker grade needs only ~3-4 Massive calls (ticker
+daily + weekly + SPY daily + ticker overview), well within the limit.
 
 ---
 

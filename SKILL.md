@@ -49,6 +49,7 @@ fundamental source-priority ladder, and the pass/partial/fail rubric per letter.
   (read-only market data; 52-week stats + the stock's group) or **Massive Market Data**
   (Polygon-style `/v2/aggs` OHLCV bars + ticker overview) — either can feed
   `scripts/relative_strength.py`. Both are deferred; load with `ToolSearch` first.
+  **Throttle Massive to at most 5 calls/minute** (see the data guide for batching).
 - **Fundamental data** via connectors (Daloopa / bigdata.com / LSEG / **Financial Modeling
   Prep (FMP)** / SEC EDGAR through `securities-filings-lookup`) or **web search**. See the
   source ladder in the data guide (Massive's financials cover C/A too, when plan-entitled).
