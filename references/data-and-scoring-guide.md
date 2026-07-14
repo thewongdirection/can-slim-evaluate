@@ -20,6 +20,19 @@ price snapshot company themes"`. **Strictly read-only market data** — only `se
 If IBKR is unavailable, get price/technicals from the web too (52-week high/low, YTD, a
 1-year chart read) and say so.
 
+**Massive Market Data (`Massive_Market_Data` MCP) — a strong price/volume alternative to IBKR.**
+A Polygon-style API: `search_endpoints` to discover, then `call_api`. Pull daily/weekly OHLCV
+bars from `GET /v2/aggs/ticker/{TICKER}/range/1/{day|week}/{from}/{to}` for the ticker **and**
+SPY, map each bar to `[t,o,h,l,c,v]`, and feed them straight into
+`scripts/relative_strength.py` (no code change) — this fully covers the technical letters
+**N/S/L/M** and replaces IBKR when IBKR isn't connected. `GET /v3/reference/tickers/{TICKER}`
+gives **market cap, shares outstanding, industry** for the essentials block. Its financials
+endpoints (`/stocks/financials/v1/income-statements`, `/ratios`, `/benzinga/v1/earnings`) would
+cover **C/A** and P/E/ROE, **but are often plan-gated (HTTP 403 NOT_AUTHORIZED)** — if so, get
+C/A from the fundamental ladder below. (Verified 2026-07: aggregates + ticker-overview entitled;
+financials/ratios/earnings needed a plan upgrade. Cross-check: Massive bars reproduced the
+IBKR-based RS and % off high exactly.)
+
 ---
 
 ## Fundamental source priority (use the highest that's connected)

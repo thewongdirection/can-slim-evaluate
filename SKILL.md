@@ -45,12 +45,15 @@ the chart-base patterns, the sell rules, and the classic mistakes. **Read
 fundamental source-priority ladder, and the pass/partial/fail rubric per letter.
 
 ## Prerequisites
-- **IBKR MCP connector** (read-only market data) for live price/volume/52-week stats and the
-  stock's group. IBKR tools are deferred — load with `ToolSearch` first.
+- **Price/volume** for the technical letters (N/S/L/M) from either the **IBKR MCP connector**
+  (read-only market data; 52-week stats + the stock's group) or **Massive Market Data**
+  (Polygon-style `/v2/aggs` OHLCV bars + ticker overview) — either can feed
+  `scripts/relative_strength.py`. Both are deferred; load with `ToolSearch` first.
 - **Fundamental data** via connectors (Daloopa / bigdata.com / LSEG / **Financial Modeling
   Prep (FMP)** / SEC EDGAR through `securities-filings-lookup`) or **web search**. See the
-  source ladder in the data guide.
-- If IBKR is unavailable, source price/technicals from the web too and say so — don't block.
+  source ladder in the data guide (Massive's financials cover C/A too, when plan-entitled).
+- If no market-data connector is available, source price/technicals from the web too and say
+  so — don't block.
 
 ## Workflow
 Work in order; keep the user informed.
