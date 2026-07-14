@@ -50,9 +50,10 @@ fundamental source-priority ladder, and the pass/partial/fail rubric per letter.
   (Polygon-style `/v2/aggs` OHLCV bars + ticker overview) — either can feed
   `scripts/relative_strength.py`. Both are deferred; load with `ToolSearch` first.
   **Throttle Massive to at most 5 calls/minute** (see the data guide for batching).
-- **Fundamental data** via connectors (Daloopa / bigdata.com / LSEG / **Financial Modeling
-  Prep (FMP)** / SEC EDGAR through `securities-filings-lookup`) or **web search**. See the
-  source ladder in the data guide (Massive's financials cover C/A too, when plan-entitled).
+- **Fundamental data** via connectors (Daloopa / bigdata.com / LSEG / **Massive** — *preferred
+  over FMP* when its financials are plan-entitled / **Financial Modeling Prep (FMP)** / SEC EDGAR
+  through `securities-filings-lookup`) or **web search**. See the source ladder in the data guide;
+  **prefer Massive over FMP**, falling back to FMP only when Massive's financials return 403.
 - If no market-data connector is available, source price/technicals from the web too and say
   so — don't block.
 

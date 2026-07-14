@@ -50,7 +50,16 @@ Same ladder as the screener — prefer real financial data over generic web sear
    `earnings-quality-screen`) — latest-quarter beat/acceleration/guidance for **C**, the
    earnings-quality check, and the **N** story.
 3. **LSEG** (`lseg:equity-research`) — analyst consensus estimates + revisions/surprises.
-4. **Financial Modeling Prep (FMP)** — a structured fundamentals MCP (deferred; load its tools
+4. **Massive Market Data** (`Massive_Market_Data` MCP) — **the preferred structured source,
+   ahead of FMP.** `/stocks/financials/v1/income-statements` + `/ratios` cover **C/A** (EPS &
+   revenue growth) and ROE / margins / debt / P/E / market cap from SEC data; `/benzinga/v1/earnings`
+   gives the latest-quarter EPS/revenue surprise and the next-earnings date; `/v3/reference/tickers`
+   gives market cap & shares for essentials. Endpoints and the **≤5-calls/min throttle** are in the
+   price section above. **Caveat:** these financials endpoints are often plan-gated (HTTP 403
+   NOT_AUTHORIZED) — if so, drop to FMP (#5). (Massive also supplies price/volume for N/S/L/M, so
+   prefer it for the whole data pull when entitled.)
+5. **Financial Modeling Prep (FMP)** — the fallback when Massive's financials are gated. A
+   structured fundamentals MCP (deferred; load its tools
    with `ToolSearch`). Broad, fast coverage of the exact CAN SLIM inputs. Preferred tools:
    `statements` (income / balance / cash-flow history → **EPS & revenue growth** for **C**,
    multi-year annuals, **margins / ROE / debt** for **A**/**S**), `analyst` / `tipranks`
@@ -68,9 +77,9 @@ Same ladder as the screener — prefer real financial data over generic web sear
    If the quarterly call is blocked, don't stall — source the latest quarter's C from the web
    or the 10-Q via **`securities-filings-lookup`**, and keep FMP for the annual A/ROE data.
    Requires the user's FMP API key / connector; if absent, skip to the next source.
-5. **SEC EDGAR** via the **`securities-filings-lookup`** skill — authoritative 10-K/10-Q/20-F
+6. **SEC EDGAR** via the **`securities-filings-lookup`** skill — authoritative 10-K/10-Q/20-F
    for ground-truth statements, and 13F/Form 4 for **I** (also non-US listings).
-6. **General web search** — only when none of the above are connected. Favor primary/recent
+7. **General web search** — only when none of the above are connected. Favor primary/recent
    sources; obey copyright (paraphrase; short quotes only).
 
 **Deep companion report:** for a fuller single-stock financial picture (fundamentals vs.
