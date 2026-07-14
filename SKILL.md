@@ -95,6 +95,9 @@ off high.
 1. **Fill the report.** Copy `assets/evaluation_template.html` to `<TICKER>-canslim.html` and
    fill the `CONFIG` object (the only thing you edit) — header (ticker/company/price/as-of),
    `verdict` (label + tone + pass-weighted score /7 + one-line summary + buy point/stop), the
+   `entryStop` band — **the prices the framework proposes: entry = the pivot buy point (buy up
+   to ~5% past it), stop = 7-8% below entry (3% in a correction)**; give real prices when there
+   is a valid pivot, else "None now" + the condition, the
    seven `letters` (each with score, the bar, the actual value, and a CAN-SLIM-only `read`), the
    `chart` technicals (RS, % off high, base, pivot, breakout volume), the optional
    `essentials` reference stats (P/E, forward P/E, market cap, EPS, yield, beta, shares,

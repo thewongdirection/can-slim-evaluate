@@ -60,6 +60,16 @@
   .verdict .sum{flex:1;min-width:240px;font-size:15px}
   .verdict .plan{font-family:var(--mono);font-size:13.5px;color:var(--muted);white-space:nowrap}
 
+  .plan-band{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 4px}
+  .plan-band .cell{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 15px}
+  .plan-band .cell.entry{border-left:3px solid var(--accent)}
+  .plan-band .cell.stop{border-left:3px solid var(--fail)}
+  .plan-band .l{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+  .plan-band .v{font-family:var(--mono);font-size:18px;font-weight:700;margin-top:3px}
+  .plan-band .cell.stop .v{color:var(--fail)}
+  .plan-band .n{font-size:12px;color:var(--muted);margin-top:4px}
+  @media (max-width:520px){ .plan-band{grid-template-columns:1fr} }
+
   .section-title{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:24px 0 10px}
   .section-note{font-weight:400;text-transform:none;letter-spacing:0;opacity:.72;font-size:11px}
 
@@ -110,6 +120,8 @@
 
   <div class="verdict" id="verdict"></div>
 
+  <div class="plan-band" id="planband"></div>
+
   <div class="section-title">CAN SLIM scorecard</div>
   <div id="letters"></div>
 
@@ -144,6 +156,16 @@ const CONFIG = {
     scoreText: "0 / 7",        // pass-weighted score out of 7
     summary: "One-line CAN SLIM read of the stock.",
     plan: "Buy point: - | Stop: -"
+  },
+
+  // What the framework proposes for ENTRY (the pivot buy point; buy up to ~5% past it) and the
+  // STOP (7-8% below entry, 3% in a market correction). Give real prices when there is a valid
+  // pivot (BUY-RANGE); for WATCH/AVOID say "None now" + the condition, and still state the rule.
+  entryStop: {
+    entry: "$178.00 (pivot); buy up to +5% ($187)",
+    entryNote: "Breakout above the base high on volume +40-50%",
+    stop: "$164.00 (-8% from pivot)",
+    stopNote: "Cut 7-8% below your buy; 3% in a market correction. No exceptions."
   },
 
   // Seven rows, in order C A N S L I M. score = pass|partial|fail.
@@ -210,6 +232,13 @@ $("verdict").innerHTML =
   '<span class="score">'+esc(v.scoreText||"")+'</span>'+
   '<span class="sum">'+esc(v.summary||"")+'</span>'+
   (v.plan?'<span class="plan">'+esc(v.plan)+'</span>':'');
+
+const es = CONFIG.entryStop||null;
+if (es && (es.entry || es.stop)){
+  $("planband").innerHTML =
+    '<div class="cell entry"><div class="l">Entry &mdash; buy point</div><div class="v">'+esc(es.entry||"-")+'</div>'+(es.entryNote?'<div class="n">'+esc(es.entryNote)+'</div>':'')+'</div>'+
+    '<div class="cell stop"><div class="l">Stop &mdash; cut loss</div><div class="v">'+esc(es.stop||"-")+'</div>'+(es.stopNote?'<div class="n">'+esc(es.stopNote)+'</div>':'')+'</div>';
+} else { const pb=$("planband"); if(pb) pb.style.display='none'; }
 
 $("letters").innerHTML = (CONFIG.letters||[]).map(L=>{
   const t = L.score||"fail";
